@@ -1,11 +1,11 @@
-import Cart from "./models/cartmodel";
-import Order from "./models/ordermodel";
-import Product from "./models/productmodel";
-import ContactUs from "./models/contactusmodel";
-import SubCategory from "./models/subcategorymodel";
-import User from "./models/usermodel";
-import Post from "./models/postmodel";
-import Category from "./models/categorymodel";
+import Cart from "../models/cartmodel";
+import Order from "../models/ordermodel";
+import Product from "../models/productmodel";
+import ContactUs from "../models/contactusmodel";
+import SubCategory from "../models/subcategorymodel";
+import User from "../models/usermodel";
+import Post from "../models/postmodel";
+import Category from "../models/categorymodel";
 
 
 Category.hasMany(SubCategory);
