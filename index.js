@@ -9,7 +9,7 @@ import Category from "./models/categorymodel";
 
 
 Category.hasMany(SubCategory);
-SubCategory.belongsTo(Category, { foreignKey: 'categoryId' });
+SubCategory.belongsTo(Category, { foreignKey: 'CategoryId' });
 
 Product.belongsTo(SubCategory, { foreignKey: 'subcategoryId' });
 
