@@ -34,7 +34,6 @@ const Product = sequelize.define('Product', {
     },
 });
 
-Product.belongsTo(SubCategory, { foreignKey: 'subcategoryId' });
 
 Product.sync();
 

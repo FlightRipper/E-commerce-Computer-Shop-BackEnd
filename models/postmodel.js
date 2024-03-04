@@ -18,8 +18,7 @@ const Post = sequelize.define('Post', {
     }
 });
 
-User.hasMany(Post);
-Post.belongsTo(User, { foreignKey: 'UserId' });
+
 
 Post.sync();
 
