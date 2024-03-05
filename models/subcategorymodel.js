@@ -14,7 +14,8 @@ const SubCategory = sequelize.define('SubCategory', {
     },
 });
 
-
+Category.hasMany(SubCategory);
+SubCategory.belongsTo(Category, { foreignKey: 'CategoryId' });
 
 SubCategory.sync();
 

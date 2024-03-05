@@ -18,7 +18,11 @@ const Cart = sequelize.define('Cart', {
     }
 });
 
+Product.hasMany(Cart);
+Cart.belongsTo(Product, {foreignKey: 'ProductId'});
 
+Order.hasMany(Cart);
+Cart.belongsTo(Order, {foreignKey: 'OrderId'});
 
 Cart.sync();
 

@@ -18,7 +18,8 @@ const Order = sequelize.define('Order', {
     }
 });
 
-
+User.hasMany(Order);
+Order.belongsTo(User, {foreignKey: 'UserId'});
 
 Order.sync();
 
