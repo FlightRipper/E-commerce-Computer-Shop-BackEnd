@@ -24,10 +24,10 @@
 
 import { Sequelize } from "sequelize";
 const dbConfig = {
-  HOST: "sql8.freemysqlhosting.net",
-  USER: "sql8688842",
-  PASSWORD: "Kx6ekitiH9",
-  DB: "sql8688842",
+  HOST: "localhost",
+  USER: "root",
+  PASSWORD: "",
+  DB: "computershop",
   PORT:"3306",
   dialect: "mysql",
 };
