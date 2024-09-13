@@ -1,5 +1,5 @@
 import SubCategory from "../models/subcategorymodel.js";
-
+import Category from "../models/categorymodel.js";
 class SubCategoryController {
 
     static async createSubCategory(req, res){
@@ -53,6 +53,41 @@ class SubCategoryController {
             return res.status(500).json({ message: error.message });
         }
     }
+
+    static async getAllSubCategories(req, res) {
+        try {
+            const subcategories = await SubCategory.findAll({
+                order: [['id', 'DESC']],
+                include: [
+                    {
+                        model: Category,
+                        attributes: ['id', 'name']
+                    }
+                ]
+            });
+    
+            if (subcategories.length === 0) {
+                return res.status(404).json('No subcategories found');
+            }
+    
+            // Format the response to include category info
+            const formattedSubcategories = subcategories.map(subcategory => ({
+                ...subcategory.toJSON(),
+                Category: subcategory.Category ? {
+                    id: subcategory.Category.id,
+                    name: subcategory.Category.name
+                } : null
+            }));
+    
+            return res.status(200).json(formattedSubcategories);
+        } catch (error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }
+    
+    
+    
+
 }
 
 export default SubCategoryController

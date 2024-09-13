@@ -51,12 +51,37 @@ class OrderController{
         }
     }
 
-    static async getAllOrders(req, res){
-        try{
-            const orders = await Order.findAll();
-            if(orders.length === 0) return res.status(404).json({error: "there are no orders"});
-            return res.status(200).json(orders);
-        }catch(error){
+    static async getAllOrders(req, res) {
+        try {
+            const orders = await Order.findAll({
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id', 'username', 'email']
+                    }
+                ],
+                order: [['createdAt', 'DESC']]
+            });
+
+            if (orders.length === 0) {
+                return res.status(404).json({ error: "No orders found" });
+            }
+
+            // Format the response to include user info
+            const formattedOrders = orders.map(order => ({
+                ...order.toJSON(),
+                user: {
+                    id: order.User.id,
+                    name: order.User.name,
+                    email: order.User.email
+                },
+                phone: order.phone,
+                status: order.status,
+                items: order.items
+            }));
+
+            return res.status(200).json(formattedOrders);
+        } catch (error) {
             return res.status(500).json({ message: error.message });
         }
     }

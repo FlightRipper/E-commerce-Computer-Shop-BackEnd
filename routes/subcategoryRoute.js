@@ -17,4 +17,7 @@ subcategoryRouter.get('/single/:id', SubCategoryController.getSubCategory);
 //get all subcategories by category id
 subcategoryRouter.get('/', SubCategoryController.getAllSubCategoriesTotal);
 
+//get all subcategories 
+subcategoryRouter.get('/all', SubCategoryController.getAllSubCategories);
+
 export default subcategoryRouter;
