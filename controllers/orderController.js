@@ -58,33 +58,50 @@ class OrderController{
                     {
                         model: User,
                         attributes: ['id', 'username', 'email']
+                    },
+                    {
+                        model: Cart,
+                        include: [
+                            {
+                                model: Product,
+                                attributes: ['id', 'name', 'price', 'image']
+                            }
+                        ],
+                        attributes: ['quantity', 'totalprice']
                     }
                 ],
                 order: [['createdAt', 'DESC']]
             });
-
+    
             if (orders.length === 0) {
                 return res.status(404).json({ error: "No orders found" });
             }
-
-            // Format the response to include user info
+    
+            // Format the response to include user info and order items
             const formattedOrders = orders.map(order => ({
                 ...order.toJSON(),
                 user: {
                     id: order.User.id,
-                    name: order.User.name,
+                    username: order.User.username,
                     email: order.User.email
                 },
-                phone: order.phone,
                 status: order.status,
-                items: order.items
+                items: order.Carts.map(cartItem => ({
+                    productId: cartItem.Product.id,
+                    productName: cartItem.Product.name,
+                    productPrice: cartItem.Product.price,
+                    productImage: cartItem.Product.image,
+                    quantity: cartItem.quantity,
+                    totalPrice: cartItem.totalprice
+                }))
             }));
-
+    
             return res.status(200).json(formattedOrders);
         } catch (error) {
             return res.status(500).json({ message: error.message });
         }
     }
+    
 
     static async getOrdersOfUser(req, res){
         try{
