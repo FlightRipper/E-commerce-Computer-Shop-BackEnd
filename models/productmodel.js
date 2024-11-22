@@ -1,3 +1,4 @@
+// productmodel.js
 import { DataTypes } from 'sequelize';
 import sequelize from '../dbconfig.js';
 import SubCategory from "./subcategorymodel.js";
@@ -37,7 +38,8 @@ const Product = sequelize.define('Product', {
 Product.belongsTo(SubCategory, { foreignKey: 'subcategoryId' });
 
 
+SubCategory.hasMany(Product, { onDelete: 'cascade' });
+
 Product.sync();
 
 export default Product;
-

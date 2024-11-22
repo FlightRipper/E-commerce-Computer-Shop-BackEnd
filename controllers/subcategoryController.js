@@ -87,6 +87,53 @@ class SubCategoryController {
     
     
     
+    static async deleteSubCategory(req, res) {
+        try {
+          const subcategoryId = req.params.id;
+          const deletedCount = await SubCategory.destroy({ where: { id: subcategoryId } });
+      
+          if (deletedCount === 0) {
+            return res.status(404).json({ message: "SubCategory not found" });
+          }
+      
+          return res.status(204).json({ message: "SubCategory successfully deleted" });
+        } catch (error) {
+          console.error("Error deleting Subcategory:", error);
+          return res.status(500).json({ message: "Internal Server Error" });
+        }
+      }
+
+      static async editSubCategory(req, res) {
+        try {
+            const subcategoryId = req.params.id;
+            const { name, CategoryId } = req.body;
+
+            if (!name || !CategoryId) {
+                return res.status(400).json({ error: "Both name and CategoryId are required" });
+            }
+
+            const subcategory = await SubCategory.findByPk(subcategoryId);
+            if (!subcategory) {
+                return res.status(404).json({ message: "Subcategory not found" });
+            }
+
+            // Check if the provided CategoryId exists
+            const category = await Category.findByPk(CategoryId);
+            if (!category) {
+                return res.status(400).json({ message: "Invalid CategoryId" });
+            }
+
+            // Update the subcategory
+            subcategory.name = name;
+            subcategory.CategoryId = CategoryId;
+            await subcategory.save();
+
+            return res.status(200).json(subcategory);
+        } catch (error) {
+            console.error("Error editing Subcategory:", error);
+            return res.status(500).json({ message: "Internal Server Error" });
+        }
+    }
 
 }
 

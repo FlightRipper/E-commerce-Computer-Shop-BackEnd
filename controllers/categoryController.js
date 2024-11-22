@@ -43,6 +43,41 @@ class categoryController {
             return res.status(500).json({message: error.message});
         }
     }    
+
+
+
+    static async updateCategory(req, res) {
+        try {
+          const categoryId = req.params.id;
+          const updatedCount = await Category.update({ name: req.body.name }, { where: { id: categoryId } });
+          
+          if (updatedCount === 0) {
+            return res.status(404).json({ message: "Category not found" });
+          }
+      
+          return res.status(200).json({ message: "Category updated successfully" });
+        } catch (error) {
+          console.error("Error updating category:", error);
+          return res.status(500).json({ message: "Internal Server Error" });
+        }
+      }
+      
+      static async deleteCategory(req, res) {
+        try {
+          const categoryId = req.params.id;
+          const deletedCount = await Category.destroy({ where: { id: categoryId } });
+      
+          if (deletedCount === 0) {
+            return res.status(404).json({ message: "Category not found" });
+          }
+      
+          return res.status(204).json({ message: "Category successfully deleted" });
+        } catch (error) {
+          console.error("Error deleting category:", error);
+          return res.status(500).json({ message: "Internal Server Error" });
+        }
+      }
+      
 }
 
 export default categoryController

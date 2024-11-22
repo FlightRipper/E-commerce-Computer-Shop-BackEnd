@@ -15,5 +15,8 @@ categoryRouter.get('/', categoryController.getAllCategories);
 //get a product by ID
 categoryRouter.get('/:id', categoryController.getCategory);
 
+categoryRouter.patch('/:id', categoryController.updateCategory);
+
+categoryRouter.delete('/:id', categoryController.deleteCategory);
 
 export default categoryRouter;

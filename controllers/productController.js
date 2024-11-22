@@ -61,25 +61,36 @@ class ProductController {
     //update product
     static async updateProduct(req, res) {
         try {
-        const oldProduct = await Product.findByPk(req.params.id);
-        console.log(req.body)
-
-        const [upatedProduct] = await Product.update(...req.body, {
+          const oldProduct = await Product.findByPk(req.params.id);
+      
+          // Check if product exists
+          if (!oldProduct) {
+            return res.status(404).json({ message: "Product not found" });
+          }
+      
+          console.log(req.body);
+      
+          // Update the product using PATCH
+          const [updatedCount] = await Product.update(req.body, {
             where: {
-            id: req.params.id,
+              id: req.params.id,
             },
-        });
-
-        if (!upatedProduct) {
-            return res.status(404).json("please enter the fields you want to edit");
-        }
-
-        const newProduct = await Product.findByPk(req.params.id);
-        return res.status(200).json(newProduct);
+          });
+      
+          if (updatedCount === 0) {
+            return res.status(400).json({ message: "No fields were updated" });
+          }
+      
+          // Fetch the updated product
+          const newProduct = await Product.findByPk(req.params.id);
+          
+          return res.status(200).json(newProduct);
         } catch (error) {
-        return res.status(500).json({ message: error.message });
+          console.error("Error updating product:", error);
+          return res.status(500).json({ message: "Internal Server Error", error: error.message });
         }
-    }
+      }
+      
 
     static async updateProductquantity(req, res) {
         try {

@@ -162,6 +162,47 @@ class OrderController{
             return res.status(500).json({ message: error.message });
         }
     }
+
+
+    static async editOrder(req, res) {
+        try {
+            const { id } = req.params;
+            const { status } = req.body;
+    
+            if (!status) {
+                return res.status(400).json({ error: "Status is required" });
+            }
+    
+            const foundOrder = await Order.findByPk(id);
+            if (!foundOrder) {
+                return res.status(404).json({ error: "Order not found" });
+            }
+    
+            // Update the order status
+            const updatedOrder = await Order.update(
+                { status: status },
+                { 
+                    where: { id },
+                    returning: true 
+                }
+            );
+    
+            // Fetch the updated order from the database
+            const editedOrder = await Order.findByPk(id);
+    
+            if (!editedOrder) {
+                return res.status(404).json({ error: "Order not found after update" });
+            }
+    
+            // Return the updated order
+            return res.status(200).json(editedOrder);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: "Error editing order", error: error.message });
+        }
+    }
+    
+
 }
 
 export default OrderController

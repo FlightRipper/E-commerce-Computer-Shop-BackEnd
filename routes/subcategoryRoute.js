@@ -20,4 +20,10 @@ subcategoryRouter.get('/', SubCategoryController.getAllSubCategoriesTotal);
 //get all subcategories 
 subcategoryRouter.get('/all', SubCategoryController.getAllSubCategories);
 
+
+subcategoryRouter.patch('/:id', SubCategoryController.editSubCategory);
+
+
+subcategoryRouter.delete('/:id', SubCategoryController.deleteSubCategory);
+
 export default subcategoryRouter;
