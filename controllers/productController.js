@@ -6,20 +6,25 @@ import path from 'path';
 
 class ProductController {
 
-    static async createProduct(req, res){
+    static async createProduct(req, res) {
+        console.log(req.body);
+        console.log(req.file); 
         try {
-            const image = req.file.filename;
+            const image = req.file?.filename; 
             const { name, price, description, quantity, subcategoryId } = req.body;
+    
             if (!name || !price || !description || !quantity || !subcategoryId || !image) {
-              return res.status(400).json({ error: "All fields are required" });
+                return res.status(400).json({ error: "All fields are required" });
             }
-            const product = await Product.create({ ...req.body, image: image });
+    
+            const product = await Product.create({ ...req.body, image });
             await product.save();
             res.status(200).json(product);
         } catch (error) {
-        res.status(400).json({ error: error });
+            res.status(400).json({ error });
         }
     }
+    
 
     static getAllProducts = async (req, res) => {
         try {
