@@ -12,7 +12,6 @@ const protect = async (req, res, next) => {
   console.log(decoded);
 
   const user = await User.findByPk(decoded.id);
-
   req.user = user;
 
   if (!req.user) 

@@ -3,7 +3,7 @@ import Category from "../models/categorymodel.js";
 class categoryController {
 
     static async createCategory(req, res){
-        try{
+      try {
             const catName = req.body.name
             console.log(catName)
             const existingCategory = await Category.findOne({

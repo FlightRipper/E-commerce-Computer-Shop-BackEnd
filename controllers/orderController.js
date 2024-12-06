@@ -144,8 +144,11 @@ class OrderController{
     }
 
     static getActiveOrders = async (req, res) => {
+        console.log(await Order.findOne({ where: { status: "active", UserId: req.params.id } }))
         try {
+            console.log("zabertene", req.params.id)
             const orders = await Order.findOne({ where: { status: "active", UserId: req.params.id } });
+            console.log("zaber7mar", orders)
             if (!orders) return res.status(404).json({ error: "there are no active orders" });
             const cartproducts = await Cart.findAll({ where: { OrderId: orders.id } });
             const products = await Promise.all(cartproducts.map(async (cartProduct) => {

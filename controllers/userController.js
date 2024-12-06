@@ -98,7 +98,7 @@ class userController {
         }
 
         const token = createToken(user.id);
-        return res.status(200).json({ username, userType:user.userType, token, balance:user.balance });
+        return res.status(200).json({ username, userType:user.userType, token, balance:user.balance, image : user.image, id: user.id });
         } catch (error) {
         return res.status(500).json({ message: error.message });
         }

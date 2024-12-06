@@ -27,7 +27,7 @@ const dbConfig = {
   HOST: "localhost",
   USER: "root",
   PASSWORD: "",
-  DB: "rippers",
+  DB: "computershop",
   PORT:"3306",
   dialect: "mysql",
 };

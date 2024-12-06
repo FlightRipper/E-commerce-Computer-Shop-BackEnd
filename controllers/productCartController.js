@@ -7,7 +7,7 @@ export default class CartController {
     static CreateCart = async (req, res) => {
 
         try {
-            console.log(req.body);
+            console.log("zabre bel cart", res);
             const { ProductId, quantity, UserId } = req.body;
             let activeOrder = await Order.findOne({ where: { status: 'active' } });
             if (!activeOrder) {
